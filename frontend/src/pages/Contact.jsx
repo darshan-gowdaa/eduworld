@@ -219,23 +219,49 @@ const Contact = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {contactMethods.map((method, index) => (
               <div key={index} className="group relative">
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                <div className={`bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 flex flex-col items-center text-center h-full`}>
                   <div className={`bg-${method.color}-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform`}>
                     <method.icon className={`h-8 w-8 text-${method.color}-600`} />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{method.title}</h3>
                   <p className="text-gray-600 mb-4">{method.subtitle}</p>
-                  <p className="font-semibold text-gray-900 mb-1">{method.info}</p>
-                  <p className="text-sm text-gray-500 mb-4">{method.subInfo}</p>
-                  {method.action && (
+                  {/* Only render info/subInfo for non-Hours cards */}
+                  {method.title !== 'Hours' && (
+                    <>
+                      <p className="font-semibold text-gray-900 mb-1">{method.info}</p>
+                      <p className="text-sm text-gray-500 mb-4">{method.subInfo}</p>
+                    </>
+                  )}
+                  {/* Enhanced Action Button Logic */}
+                  {method.action && method.action !== '#' ? (
                     <a
                       href={method.action}
-                      className={`inline-flex items-center text-${method.color}-600 font-medium hover:text-${method.color}-700 transition-colors`}
+                      aria-label={`Connect via ${method.title}`}
+                      className={`inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full font-semibold bg-gradient-to-r from-${method.color}-500 to-${method.color}-600 text-white shadow-md hover:from-${method.color}-600 hover:to-${method.color}-700 focus:outline-none focus:ring-2 focus:ring-${method.color}-400 transition-all duration-200 mt-auto`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Connect Now
-                      <ExternalLink className="ml-2 h-4 w-4" />
+                      <ExternalLink className="h-4 w-4" />
                     </a>
-                  )}
+                  ) : method.title === 'Address' ? (
+                    <button
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full font-semibold bg-gray-200 text-gray-500 cursor-not-allowed mt-auto"
+                      disabled
+                      aria-label="No map link available"
+                    >
+                      View on Map
+                      <ExternalLink className="h-4 w-4" />
+                    </button>
+                  ) : method.title === 'Hours' ? (
+                    <div className="mt-4 flex flex-col items-center">
+                      <span className={`inline-flex items-center gap-2 px-4 py-1 rounded-full bg-${method.color}-50 text-${method.color}-700 font-medium text-sm`}>
+                        <Clock className="h-4 w-4 mr-1" />
+                        <span className="font-bold">Mon-Fri: 9AM-6PM</span>
+                      </span>
+                      <span className="text-xs text-gray-700 mt-1 font-bold">Sat: 10AM-4PM</span>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ))}
