@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUserGraduate, FaFileAlt, FaCheckCircle, FaQuestionCircle } from 'react-icons/fa';
+import { FileText, CheckCircle, HelpCircle, GraduationCap } from 'lucide-react';
 import axios from 'axios';
 
 const StudentDashboard = () => {
@@ -67,7 +67,7 @@ const StudentDashboard = () => {
               className="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl p-8 flex flex-col items-center hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 border border-blue-400/20"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <FaFileAlt className="h-12 w-12 mb-4 group-hover:scale-110 transition-transform duration-300" />
+              <FileText className="h-12 w-12 mb-4 group-hover:scale-110 transition-transform duration-300" />
               <span className="font-bold text-lg mb-2">Apply Now</span>
               <span className="text-blue-100 text-sm text-center">Submit your application</span>
             </Link>
@@ -77,7 +77,7 @@ const StudentDashboard = () => {
               className="group relative overflow-hidden bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl p-8 flex flex-col items-center hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 border border-green-400/20"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <FaCheckCircle className="h-12 w-12 mb-4 group-hover:scale-110 transition-transform duration-300" />
+              <CheckCircle className="h-12 w-12 mb-4 group-hover:scale-110 transition-transform duration-300" />
               <span className="font-bold text-lg mb-2">View Status</span>
               <span className="text-green-100 text-sm text-center">Track your progress</span>
             </Link>
@@ -87,7 +87,7 @@ const StudentDashboard = () => {
               className="group relative overflow-hidden bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-2xl p-8 flex flex-col items-center hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 border border-orange-400/20"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <FaQuestionCircle className="h-12 w-12 mb-4 group-hover:scale-110 transition-transform duration-300" />
+              <HelpCircle className="h-12 w-12 mb-4 group-hover:scale-110 transition-transform duration-300" />
               <span className="font-bold text-lg mb-2">Send Enquiry</span>
               <span className="text-orange-100 text-sm text-center">Get help & support</span>
             </Link>

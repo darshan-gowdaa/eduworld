@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaEnvelope, FaInfoCircle, FaTimes, FaArrowLeft, FaExclamationTriangle, FaExclamationCircle, FaInfo } from 'react-icons/fa';
+import { Mail, Info, X, ArrowLeft, AlertTriangle, AlertCircle, Info as InfoIcon } from 'lucide-react';
 
 // Priority level component
 const PriorityDisplay = ({ urgency }) => {
@@ -10,35 +10,35 @@ const PriorityDisplay = ({ urgency }) => {
         case 'urgent':
             return (
                 <span className={`${baseClasses} bg-red-200 text-red-900 border border-red-300`}>
-                    <FaExclamationTriangle />
+                    <AlertTriangle />
                     Urgent
                 </span>
             );
         case 'high':
             return (
                 <span className={`${baseClasses} bg-red-100 text-red-800`}>
-                    <FaExclamationTriangle />
+                    <AlertTriangle />
                     High
                 </span>
             );
         case 'medium':
             return (
                 <span className={`${baseClasses} bg-yellow-100 text-yellow-800`}>
-                    <FaExclamationCircle />
+                    <AlertCircle />
                     Medium
                 </span>
             );
         case 'low':
             return (
                 <span className={`${baseClasses} bg-green-100 text-green-800`}>
-                    <FaInfo />
+                    <InfoIcon />
                     Low
                 </span>
             );
         default:
             return (
                 <span className={`${baseClasses} bg-gray-100 text-gray-800`}>
-                    <FaInfo />
+                    <InfoIcon />
                     Normal
                 </span>
             );
@@ -110,7 +110,7 @@ const FacultyEnquiries = () => {
                             onClick={() => navigate('/faculty/dashboard')}
                             className="flex items-center gap-2 px-4 py-2 text-gray-600 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-all duration-200 hover:shadow-md border border-gray-200"
                         >
-                            <FaArrowLeft className="text-sm" />
+                            <ArrowLeft className="text-sm" />
                             <span className="text-sm font-medium">Back to Dashboard</span>
                         </button>
                     </div>
@@ -137,7 +137,7 @@ const FacultyEnquiries = () => {
                                 {enquiries.length === 0 ? (
                                     <tr>
                                         <td colSpan="5" className="text-center py-12 text-gray-500">
-                                            <FaEnvelope className="mx-auto text-4xl text-gray-300" />
+                                            <Mail className="mx-auto text-4xl text-gray-300" />
                                             <p className="mt-2 text-lg">No enquiries found.</p>
                                         </td>
                                     </tr>
@@ -163,7 +163,7 @@ const FacultyEnquiries = () => {
                                                     className="inline-flex items-center gap-2 px-4 py-2 text-sm text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg"
                                                     onClick={() => handleViewDetails(enq)}
                                                 >
-                                                    <FaInfoCircle className="text-blue-600" />
+                                                    <Info className="text-blue-600" />
                                                     Details
                                                 </button>
                                             </td>
@@ -197,7 +197,7 @@ const FacultyEnquiries = () => {
                                     onClick={closeModal}
                                     aria-label="Close"
                                 >
-                                    <FaTimes className="h-5 w-5" />
+                                    <X className="h-5 w-5" />
                                 </button>
                             </div>
                             <p className="text-xs text-gray-400 border-b pb-4 mb-4">Received: {formatDateTime(selectedEnquiry.createdAt)}</p>
@@ -224,7 +224,7 @@ const FacultyEnquiries = () => {
                                     href={`mailto:${selectedEnquiry.email}`}
                                     className="inline-flex items-center gap-x-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                                 >
-                                    <FaEnvelope className="w-4 h-4" />
+                                    <Mail className="w-4 h-4" />
                                     Reply
                                 </a>
                             </div>

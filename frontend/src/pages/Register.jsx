@@ -2,8 +2,9 @@ import { useState } from 'react';
 import AuthForm from '../components/forms/AuthForm';
 import UserTypePopup from '../components/forms/UserTypePopup';
 import { useNavigate, Link } from 'react-router-dom';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, GraduationCap, Loader2 } from 'lucide-react';
 import axios from 'axios';
+import { showToast } from '../components/ui/Toast';
 
 const Register = ({ isAuthenticated, setIsAuthenticated, userRole, setUserRole, setUserName }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +28,7 @@ const Register = ({ isAuthenticated, setIsAuthenticated, userRole, setUserRole, 
       setUserName(res.data.user.name || '');
       localStorage.setItem('userRole', res.data.user.role);
       localStorage.setItem('userName', res.data.user.name || '');
+      showToast.success('Registration successful! Redirecting to dashboard...');
       setTimeout(() => {
         if (res.data.user.role === 'student') {
           navigate('/student/dashboard');
@@ -36,6 +38,7 @@ const Register = ({ isAuthenticated, setIsAuthenticated, userRole, setUserRole, 
       }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      showToast.error(err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -65,7 +68,7 @@ const Register = ({ isAuthenticated, setIsAuthenticated, userRole, setUserRole, 
                 Your account has been created successfully. You will be automatically logged in and redirected to your dashboard.
               </p>
               <div className="flex items-center justify-center">
-                <svg className="animate-spin h-6 w-6 text-blue-400 mr-2" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
+                <Loader2 className="animate-spin h-6 w-6 text-blue-400 mr-2" />
                 <span className="text-blue-200">Redirecting...</span>
               </div>
             </div>
@@ -95,11 +98,7 @@ const Register = ({ isAuthenticated, setIsAuthenticated, userRole, setUserRole, 
               <div className="absolute inset-0 rounded-full bg-gradient-radial from-purple-200/60 via-transparent to-transparent blur-2xl opacity-80 w-14 h-14 -z-10" />
               {/* Blue-purple gradient circle */}
               <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-500 shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-7 w-7 text-white">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3L2.25 8.25l9.75 5.25 9.75-5.25L12 3z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21V8.25" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5v4.125c0 .621-.384 1.18-.96 1.393l-6.54 2.454a2.25 2.25 0 01-1.5 0l-6.54-2.454A1.5 1.5 0 014.5 14.625V10.5" />
-                </svg>
+                <GraduationCap className="h-7 w-7 text-white" />
               </div>
             </Link>
           </div>

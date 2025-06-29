@@ -1,4 +1,5 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -14,16 +15,16 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FaFacebook className="h-6 w-6" />
+                <Facebook className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FaTwitter className="h-6 w-6" />
+                <Twitter className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FaInstagram className="h-6 w-6" />
+                <Instagram className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FaLinkedin className="h-6 w-6" />
+                <Linkedin className="h-6 w-6" />
               </a>
             </div>
           </div>
@@ -33,24 +34,24 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/courses" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/courses" className="text-gray-300 hover:text-white transition-colors">
                   Courses
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/contact" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -60,15 +61,15 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <FaPhone className="text-blue-400" />
+                <Phone className="text-blue-400" />
                 <span className="text-gray-300">+91 9113504966</span>
               </div>
               <div className="flex items-center space-x-3">
-                <FaEnvelope className="text-blue-400" />
+                <Mail className="text-blue-400" />
                 <span className="text-gray-300">darshangowdaa223@gmail.com</span>
               </div>
               <div className="flex items-start space-x-3">
-                <FaMapMarkerAlt className="text-blue-400 mt-1" />
+                <MapPin className="text-blue-400 mt-1" />
                 <span className="text-gray-300">
                   Nagasandra, Bengaluru -560073
                 </span>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HeroSection = ({
   title,
@@ -45,14 +46,26 @@ const HeroSection = ({
             <div className="flex justify-center gap-4 mb-12 flex-wrap">
               {buttons.map((btn, idx) =>
                 btn.href ? (
-                  <a
-                    key={idx}
-                    href={btn.href}
-                    className={btn.className || 'bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg'}
-                  >
-                    {btn.icon && <span className="inline mr-2">{btn.icon}</span>}
-                    {btn.text}
-                  </a>
+                  btn.href.startsWith('/') ? (
+                    <Link
+                      key={idx}
+                      to={btn.href}
+                      className={btn.className || 'bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg'}
+                    >
+                      {btn.icon && <span className="inline mr-2">{btn.icon}</span>}
+                      {btn.text}
+                    </Link>
+                  ) : (
+                    <a
+                      key={idx}
+                      href={btn.href}
+                      className={btn.className || 'bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg'}
+                      target="_blank" rel="noopener noreferrer"
+                    >
+                      {btn.icon && <span className="inline mr-2">{btn.icon}</span>}
+                      {btn.text}
+                    </a>
+                  )
                 ) : (
                   <button
                     key={idx}

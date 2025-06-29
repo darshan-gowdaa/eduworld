@@ -43,8 +43,8 @@ const CallButton = () => {
       {/* Floating Contact Button */}
       <div className={`fixed bottom-28 right-6 z-50 transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
         <div className="relative">
-          {/* Pulse animation ring */}
-          <div className={`absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full animate-pulse ${showPopup ? 'opacity-0' : 'opacity-75'}`}></div>
+          {/* Pulse animation ring - keep static */}
+          <div className={`absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full ${showPopup ? 'opacity-0' : 'opacity-75'}`}></div>
           
           <button
             onClick={() => setShowPopup(!showPopup)}
@@ -55,8 +55,8 @@ const CallButton = () => {
             </div>
           </button>
 
-          {/* Notification badge */}
-          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-bounce">
+          {/* Notification badge - keep static */}
+          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
             <span className="font-bold">!</span>
           </div>
         </div>
@@ -68,7 +68,7 @@ const CallButton = () => {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full p-2">
+              <div className="bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full p-2 animate-pulse">
                 <User className="h-5 w-5 text-white" />
               </div>
               <div>
@@ -84,7 +84,7 @@ const CallButton = () => {
               onClick={handleCall}
               className="w-full group flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
             >
-              <div className="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition-colors">
+              <div className="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition-colors animate-bounce">
                 <Phone className="h-5 w-5" />
               </div>
               <div className="text-left">
@@ -97,7 +97,7 @@ const CallButton = () => {
               onClick={handleWhatsApp}
               className="w-full group flex items-center space-x-4 p-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
             >
-              <div className="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition-colors">
+              <div className="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition-colors animate-bounce">
                 <MessageCircle className="h-5 w-5" />
               </div>
               <div className="text-left">
@@ -110,7 +110,7 @@ const CallButton = () => {
               onClick={handleEmail}
               className="w-full group flex items-center space-x-4 p-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
             >
-              <div className="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition-colors">
+              <div className="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition-colors animate-bounce">
                 <Mail className="h-5 w-5" />
               </div>
               <div className="text-left">
@@ -121,7 +121,7 @@ const CallButton = () => {
           </div>
 
           {/* Quick Response Promise */}
-          <div className=" p-3 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-lg border border-emerald-200">
+          <div className=" p-3 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-lg border border-emerald-200 animate-pulse">
             <p className="text-sm text-emerald-800 font-medium text-center">
               ⚡ Quick Response Guaranteed
             </p>

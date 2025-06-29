@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaUser, FaGraduationCap, FaChevronDown, FaSignOutAlt } from 'react-icons/fa';
+import { Menu, X, User, GraduationCap, ChevronDown, LogOut } from 'lucide-react';
 
 const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', dashboardMode = false, onLogout, pathname = '' }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,7 +66,7 @@ const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', d
               <div className="absolute inset-0 rounded-full bg-gradient-radial from-purple-200/60 via-transparent to-transparent blur-2xl opacity-80 w-14 h-14 -z-10" />
               {/* Blue-purple gradient circle */}
               <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-500 shadow-lg">
-                <FaGraduationCap className="h-7 w-7 text-white" />
+                <GraduationCap className="h-7 w-7 text-white" />
               </div>
             </div>
             <div className="flex flex-col">
@@ -124,7 +124,7 @@ const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', d
                   className="p-3 text-red-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-105"
                   title="Sign Out"
                 >
-                  <FaSignOutAlt className="h-4 w-4" />
+                  <LogOut className="h-4 w-4" />
                 </button>
               </div>
             ) : isAuthenticated ? (
@@ -137,7 +137,7 @@ const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', d
                   >
                     <div className="relative">
                       <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
-                        <FaUser className="h-4 w-4 text-white" />
+                        <User className="h-4 w-4 text-white" />
                       </div>
                       <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
                     </div>
@@ -145,7 +145,7 @@ const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', d
                       <span className="text-sm font-semibold text-gray-900">{userName ? userName : (userRole ? userRole.charAt(0).toUpperCase() + userRole.slice(1) : 'User')}</span>
                       <span className="text-xs text-gray-500 capitalize font-medium">{userRole || ''}</span>
                     </div>
-                    <FaChevronDown className={`h-3 w-3 text-gray-500 transition-transform duration-300 ${showUserDropdown ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-3 w-3 text-gray-500 transition-transform duration-300 ${showUserDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   {/* User Dropdown Menu */}
                   {showUserDropdown && (
@@ -197,7 +197,7 @@ const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', d
               onClick={toggleMenu}
               className="p-3 text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10"
             >
-              {isMenuOpen ? <FaTimes className="h-5 w-5" /> : <FaBars className="h-5 w-5" />}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
@@ -231,7 +231,7 @@ const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', d
                   className="p-2 text-red-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-105"
                   title="Sign Out"
                 >
-                  <FaSignOutAlt className="h-4 w-4" />
+                  <LogOut className="h-4 w-4" />
                 </button>
               </div>
             ) : isAuthenticated ? (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaCheckCircle, FaHourglassHalf, FaTimesCircle, FaEye, FaArrowLeft } from 'react-icons/fa';
+import { CheckCircle, Hourglass, XCircle, Eye, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 
 // A more visually distinct status component
@@ -10,28 +10,28 @@ const StatusDisplay = ({ status }) => {
     case 'approved':
       return (
         <span className={`${baseClasses} bg-green-100 text-green-800`}>
-          <FaCheckCircle />
+          <CheckCircle />
           Approved
         </span>
       );
     case 'pending':
       return (
         <span className={`${baseClasses} bg-yellow-100 text-yellow-800`}>
-          <FaHourglassHalf />
+          <Hourglass />
           Pending
         </span>
       );
     case 'rejected':
       return (
         <span className={`${baseClasses} bg-red-100 text-red-800`}>
-          <FaTimesCircle />
+          <XCircle />
           Rejected
         </span>
       );
     default:
       return (
         <span className={`${baseClasses} bg-gray-100 text-gray-800`}>
-          <FaHourglassHalf />
+          <Hourglass />
           Unknown
         </span>
       );
@@ -172,7 +172,7 @@ const FacultyApplications = () => {
               onClick={() => navigate('/faculty/dashboard')}
               className="flex items-center gap-2 px-4 py-2 text-gray-600 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-all duration-200 hover:shadow-md border border-gray-200"
             >
-              <FaArrowLeft className="text-sm" />
+              <ArrowLeft className="text-sm" />
               <span className="text-sm font-medium">Back to Dashboard</span>
             </button>
           </div>
@@ -218,7 +218,7 @@ const FacultyApplications = () => {
                           className="inline-flex items-center gap-x-2 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-all"
                           onClick={() => handleView(app)}
                         >
-                          <FaEye />
+                          <Eye />
                           View
                         </button>
                       </td>

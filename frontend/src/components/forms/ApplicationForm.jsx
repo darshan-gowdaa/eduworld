@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { FaUser, FaGraduationCap, FaBook, FaCheckCircle, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import { User, GraduationCap, BookOpen, CheckCircle, ArrowRight, ArrowLeft, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import { showToast } from '../ui/Toast';
 
 const steps = [
-  { label: 'Personal Info', icon: <FaUser /> },
-  { label: 'Academic Details', icon: <FaGraduationCap /> },
-  { label: 'Course Selection', icon: <FaBook /> }
+  { label: 'Personal Info', icon: <User /> },
+  { label: 'Academic Details', icon: <GraduationCap /> },
+  { label: 'Course Selection', icon: <BookOpen /> }
 ];
 
 const ApplicationForm = () => {
@@ -82,7 +82,7 @@ const ApplicationForm = () => {
     return (
       <div className="max-w-sm mx-auto bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl shadow-lg text-center py-8 border border-green-200">
         <div className="bg-green-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-          <FaCheckCircle className="h-8 w-8 text-white animate-pulse" />
+          <CheckCircle className="h-8 w-8 text-white animate-pulse" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-3">Application Submitted!</h2>
         <p className="text-gray-700 text-sm leading-relaxed">Thank you for applying. We will review your application and notify you by email.</p>
@@ -203,9 +203,8 @@ const ApplicationForm = () => {
               <label className="block text-xs font-semibold text-gray-700 mb-2 group-hover:text-blue-600 transition-colors">Select Course</label>
               <select
                 {...register('courseSelected', { required: 'Please select a course' })}
-                className={`w-full px-3 py-2.5 border rounded-lg shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 appearance-none bg-white text-sm
-                  ${shouldShowErrors('courseSelected') && errors.courseSelected ? 'border-red-400 bg-red-50' : 'border-gray-300 hover:border-gray-400'}`}
-                style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2rem' }}
+                className={`w-full px-3 py-2.5 border rounded-lg shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 text-sm pr-10
+                  ${shouldShowErrors('courseSelected') && errors.courseSelected ? 'border-red-400 bg-red-50' : 'border-gray-300 hover:border-gray-400 bg-white'}`}
               >
                 <option value="">Select a course</option>
                 <option value="bcs">Bachelor of Computer Science</option>
@@ -215,6 +214,9 @@ const ApplicationForm = () => {
                 <option value="bsc-biology">Bachelor of Science in Biology</option>
                 <option value="mds">Master of Data Science</option>
               </select>
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <ChevronDown className="w-5 h-5 text-gray-400" />
+              </span>
               {shouldShowErrors('courseSelected') && errors.courseSelected && (
                 <p className="text-red-600 text-xs mt-1 flex items-center">
                   <span className="w-1 h-1 bg-red-500 rounded-full mr-1"></span>
@@ -253,7 +255,7 @@ const ApplicationForm = () => {
             disabled={step === 0 || isLoading}
             className="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:from-gray-200 hover:to-gray-300 transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 border border-gray-300 text-sm"
           >
-            <FaArrowLeft className="text-sm" /> Back
+            <ArrowLeft className="text-sm" /> Back
           </button>
           {step < steps.length - 1 ? (
             <button
@@ -262,7 +264,7 @@ const ApplicationForm = () => {
               disabled={isLoading}
               className="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 text-sm"
             >
-              Next <FaArrowRight className="text-sm" />
+              Next <ArrowRight className="text-sm" />
             </button>
           ) : (
             <button

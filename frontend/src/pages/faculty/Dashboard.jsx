@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaFileAlt, FaQuestionCircle, FaUserGraduate, FaUsers, FaEye, FaInbox } from 'react-icons/fa';
+import { FileText, HelpCircle, GraduationCap, Users, Eye, Inbox } from 'lucide-react';
 import axios from 'axios';
 
 const FacultyDashboard = () => {
@@ -49,10 +49,10 @@ const FacultyDashboard = () => {
   }, []);
 
   const statsData = [
-    { label: 'Applications', value: stats.applications, icon: <FaFileAlt className="h-8 w-8 text-blue-600" /> },
-    { label: 'Enquiries', value: stats.enquiries, icon: <FaQuestionCircle className="h-8 w-8 text-yellow-500" /> },
-    { label: 'Students', value: stats.students, icon: <FaUserGraduate className="h-8 w-8 text-green-600" /> },
-    { label: 'Faculty', value: stats.faculty, icon: <FaUsers className="h-8 w-8 text-purple-600" /> }
+    { label: 'Applications', value: stats.applications, icon: <FileText className="h-8 w-8 text-blue-600" /> },
+    { label: 'Enquiries', value: stats.enquiries, icon: <HelpCircle className="h-8 w-8 text-yellow-500" /> },
+    { label: 'Students', value: stats.students, icon: <GraduationCap className="h-8 w-8 text-green-600" /> },
+    { label: 'Faculty', value: stats.faculty, icon: <Users className="h-8 w-8 text-purple-600" /> }
   ];
 
   if (isLoading) {
@@ -83,14 +83,14 @@ const FacultyDashboard = () => {
               to="/faculty/applications"
               className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105"
             >
-              <FaEye className="h-6 w-6 group-hover:scale-110 transition-transform" />
+              <Eye className="h-6 w-6 group-hover:scale-110 transition-transform" />
               View Applications
             </Link>
             <Link
               to="/faculty/enquiries"
               className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 hover:scale-105"
             >
-              <FaInbox className="h-6 w-6 group-hover:scale-110 transition-transform" />
+              <Inbox className="h-6 w-6 group-hover:scale-110 transition-transform" />
               View Enquiries
             </Link>
           </div>

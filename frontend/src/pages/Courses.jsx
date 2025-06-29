@@ -433,8 +433,8 @@ const Courses = () => {
       <CallToAction
         title={<span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Ready to Transform Your Future?</span>}
         description={"Join thousands of successful graduates who started their journey with us. Your future begins with a single step."}
-        primaryBtn={{ text: 'Start Your Application', href: '/register', icon: <GraduationCap className="h-6 w-6 group-hover:rotate-12 transition-transform" /> }}
-        secondaryBtn={{ text: 'Schedule a Call', href: '/contact', icon: <BookOpen className="h-6 w-6 group-hover:rotate-12 transition-transform" /> }}
+        primaryBtn={{ text: 'Start Your Application', href: '/register', icon: <GraduationCap className="h-6 w-6 ml-2 group-hover:rotate-12 transition-transform" /> }}
+        secondaryBtn={{ text: 'Schedule a Call', href: '/contact', icon: <BookOpen className="h-6 w-6 ml-2 group-hover:rotate-12 transition-transform" /> }}
         showTrust={false}
         gradient="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 text-white"
       />

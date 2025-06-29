@@ -1,7 +1,6 @@
 import React from "react";
-
-// Icons can be passed as props or imported here
 import { ChevronRight, BookOpen, Star, Award, GraduationCap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CallToAction = ({
   title = "Ready to Start Your Journey?",
@@ -35,14 +34,26 @@ const CallToAction = ({
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           {primaryBtn && (
             primaryBtn.href ? (
-              <a
-                href={primaryBtn.href}
-                className="group bg-white text-blue-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
-                onClick={primaryBtn.onClick}
-              >
-                {primaryBtn.text}
-                {primaryBtn.icon}
-              </a>
+              primaryBtn.href.startsWith('/') ? (
+                <Link
+                  to={primaryBtn.href}
+                  className="group bg-white text-blue-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  onClick={primaryBtn.onClick}
+                >
+                  {primaryBtn.text}
+                  {primaryBtn.icon}
+                </Link>
+              ) : (
+                <a
+                  href={primaryBtn.href}
+                  className="group bg-white text-blue-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                  onClick={primaryBtn.onClick}
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  {primaryBtn.text}
+                  {primaryBtn.icon}
+                </a>
+              )
             ) : (
               <button
                 className="group bg-white text-blue-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
@@ -55,14 +66,26 @@ const CallToAction = ({
           )}
           {secondaryBtn && (
             secondaryBtn.href ? (
-              <a
-                href={secondaryBtn.href}
-                className="group border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
-                onClick={secondaryBtn.onClick}
-              >
-                {secondaryBtn.text}
-                {secondaryBtn.icon}
-              </a>
+              secondaryBtn.href.startsWith('/') ? (
+                <Link
+                  to={secondaryBtn.href}
+                  className="group border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                  onClick={secondaryBtn.onClick}
+                >
+                  {secondaryBtn.text}
+                  {secondaryBtn.icon}
+                </Link>
+              ) : (
+                <a
+                  href={secondaryBtn.href}
+                  className="group border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                  onClick={secondaryBtn.onClick}
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  {secondaryBtn.text}
+                  {secondaryBtn.icon}
+                </a>
+              )
             ) : (
               <button
                 className="group border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"

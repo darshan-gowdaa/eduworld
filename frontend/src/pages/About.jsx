@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaGraduationCap, FaUsers, FaTrophy, FaGlobe, FaLightbulb, FaHeart, FaChevronDown, FaPlay, FaStar, FaQuoteLeft } from 'react-icons/fa';
+import { GraduationCap, Users, Trophy, Globe, Lightbulb, Heart, ChevronDown, Play, Star, Quote, } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CallToAction from '../components/common/CallToAction';
 
@@ -87,7 +87,7 @@ const About = () => {
             </p>
             <div className="flex justify-center gap-4 mb-12">
               <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <FaPlay className="inline mr-2" />
+                <Play className="inline mr-2" />
                 Watch Our Story
               </button>
               <Link 
@@ -102,7 +102,7 @@ const About = () => {
         
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <FaChevronDown className="text-white text-2xl opacity-70" />
+          <ChevronDown className="text-white text-2xl opacity-70" />
         </div>
       </section>
 
@@ -137,7 +137,7 @@ const About = () => {
                   innovation, and commitment to student success.
                 </p>
                 <div className="absolute top-4 right-4 opacity-20">
-                  <FaLightbulb className="text-6xl" />
+                  <Lightbulb className="text-6xl" />
                 </div>
               </div>
             </div>
@@ -160,12 +160,12 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: FaLightbulb, title: 'Innovation', desc: 'Embracing new technologies and teaching methods to enhance learning experiences.', color: 'yellow', bg: 'from-yellow-400 to-orange-500' },
-              { icon: FaHeart, title: 'Excellence', desc: 'Maintaining the highest standards in education, research, and student support.', color: 'red', bg: 'from-red-400 to-pink-500' },
-              { icon: FaUsers, title: 'Diversity', desc: 'Celebrating and embracing diverse perspectives, cultures, and backgrounds.', color: 'blue', bg: 'from-blue-400 to-cyan-500' },
-              { icon: FaGraduationCap, title: 'Integrity', desc: 'Upholding ethical standards and academic honesty in all our endeavors.', color: 'green', bg: 'from-green-400 to-emerald-500' },
-              { icon: FaGlobe, title: 'Global Perspective', desc: 'Preparing students for success in an interconnected world.', color: 'purple', bg: 'from-purple-400 to-violet-500' },
-              { icon: FaTrophy, title: 'Achievement', desc: 'Supporting students in reaching their goals and realizing their potential.', color: 'orange', bg: 'from-orange-400 to-red-500' }
+              { icon: Lightbulb, title: 'Innovation', desc: 'Embracing new technologies and teaching methods to enhance learning experiences.', color: 'yellow', bg: 'from-yellow-400 to-orange-500' },
+              { icon: Heart, title: 'Excellence', desc: 'Maintaining the highest standards in education, research, and student support.', color: 'red', bg: 'from-red-400 to-pink-500' },
+              { icon: Users, title: 'Diversity', desc: 'Celebrating and embracing diverse perspectives, cultures, and backgrounds.', color: 'blue', bg: 'from-blue-400 to-cyan-500' },
+              { icon: GraduationCap, title: 'Integrity', desc: 'Upholding ethical standards and academic honesty in all our endeavors.', color: 'green', bg: 'from-green-400 to-emerald-500' },
+              { icon: Globe, title: 'Global Perspective', desc: 'Preparing students for success in an interconnected world.', color: 'purple', bg: 'from-purple-400 to-violet-500' },
+              { icon: Trophy, title: 'Achievement', desc: 'Supporting students in reaching their goals and realizing their potential.', color: 'orange', bg: 'from-orange-400 to-red-500' }
             ].map((value, index) => (
               <div 
                 key={index}
@@ -229,12 +229,12 @@ const About = () => {
                 className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl border border-blue-100 transform transition-all duration-500 hover:scale-105 hover:shadow-xl relative overflow-hidden group"
               >
                 <div className="absolute top-4 right-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <FaQuoteLeft className="text-6xl text-blue-500" />
+                  <Quote className="text-6xl text-blue-500" />
                 </div>
                 
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <FaStar key={i} className="text-yellow-400 text-lg" />
+                    <Star key={i} className="text-yellow-400 text-lg" />
                   ))}
                 </div>
                 
@@ -274,7 +274,7 @@ const About = () => {
                 <div className={`bg-gradient-to-r ${leader.gradient} h-48 relative overflow-hidden`}>
                   <img src={leader.img} alt={leader.name} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity duration-300" style={{objectPosition: 'center 35%'}} />
                   <div className="absolute bottom-4 right-4 w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                    <FaUsers className="text-white text-2xl" />
+                    <Users className="text-white text-2xl" />
                   </div>
                 </div>
                 <div className="p-8 text-center">

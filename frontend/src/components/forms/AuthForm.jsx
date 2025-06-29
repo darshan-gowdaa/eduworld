@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, Loader2, AlertCircle, CheckCircle, GraduationCap, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { showToast } from '../ui/Toast';
 
 const defaultFields = {
   login: [
@@ -33,8 +32,7 @@ export default function AuthForm({
   linkTo,
   afterForm,
 }) {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPasswordFields, setShowPasswordFields] = useState({});
   const {
     register,
     handleSubmit,
@@ -106,7 +104,7 @@ export default function AuthForm({
           );
         }
         if (field.type === 'password') {
-          const isConfirm = field.name === 'confirmPassword';
+          const isVisible = !!showPasswordFields[field.name];
           return (
             <div key={field.name}>
               <label htmlFor={field.name} className="block text-sm font-medium text-white/90">
@@ -115,24 +113,24 @@ export default function AuthForm({
               <div className="mt-1 relative">
                 <input
                   id={field.name}
-                  type={isConfirm ? (showConfirmPassword ? 'text' : 'password') : (showPassword ? 'text' : 'password')}
+                  type={isVisible ? 'text' : 'password'}
                   autoComplete={field.autoComplete}
                   {...register(field.name, {
                     required: field.required,
                     minLength: field.minLength && { value: field.minLength, message: `${field.label} must be at least ${field.minLength} characters` },
-                    validate: isConfirm ? value => value === password || 'Passwords do not match' : undefined
+                    validate: field.name === 'confirmPassword' ? value => value === password || 'Passwords do not match' : undefined
                   })}
                   className={`appearance-none block w-full px-3 py-2 pr-10 border rounded-lg placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent sm:text-sm transition duration-200 bg-white/20 backdrop-blur-sm text-white ${
                     errors[field.name] ? 'border-red-300/50 bg-red-500/20' : 'border-white/30'
                   }`}
-                  placeholder={field.placeholder || (isConfirm ? 'Confirm your password' : 'Enter your password')}
+                  placeholder={field.placeholder || (field.name === 'confirmPassword' ? 'Confirm your password' : 'Enter your password')}
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-blue-300 transition duration-200"
-                  onClick={() => isConfirm ? setShowConfirmPassword(v => !v) : setShowPassword(v => !v)}
+                  onClick={() => setShowPasswordFields(prev => ({ ...prev, [field.name]: !prev[field.name] }))}
                 >
-                  {(isConfirm ? showConfirmPassword : showPassword) ? (
+                  {isVisible ? (
                     <EyeOff className="h-5 w-5 text-white/60" />
                   ) : (
                     <Eye className="h-5 w-5 text-white/60" />
