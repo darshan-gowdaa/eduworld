@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaCheckCircle, FaHourglassHalf, FaTimesCircle, FaEye } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { FaCheckCircle, FaHourglassHalf, FaTimesCircle, FaEye, FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
 
 // A more visually distinct status component
@@ -37,8 +38,84 @@ const StatusDisplay = ({ status }) => {
   }
 };
 
+// Mock data for demonstration
+const mockApplications = [
+  {
+    _id: '1',
+    personalInfo: {
+      fullName: 'Siri Gowda',
+      email: 'siri.gowda@email.com',
+      phone: '+91 9876543210'
+    },
+    courseSelected: 'Computer Science',
+    status: 'approved',
+    additionalInfo: 'Siri has excellent academic background and strong programming skills. She completed several coding bootcamps and has a portfolio of web development projects.',
+    createdAt: '2024-01-15T10:30:00Z'
+  },
+  {
+    _id: '2',
+    personalInfo: {
+      fullName: 'Mahesh K',
+      email: 'mahesh.k@email.com',
+      phone: '+91 9876543210'
+    },
+    courseSelected: 'Data Science',
+    status: 'rejected',
+    additionalInfo: 'Mahesh lacks the required mathematics background for the Data Science program. Recommended to complete prerequisite courses before reapplying.',
+    createdAt: '2024-01-14T14:20:00Z'
+  },
+  {
+    _id: '3',
+    personalInfo: {
+      fullName: 'Rajesh K',
+      email: 'rajesh.k@email.com',
+      phone: '+91 9876543210'
+    },
+    courseSelected: 'Business Administration',
+    status: 'pending',
+    additionalInfo: 'Rajesh shows strong leadership potential and has relevant work experience in retail management.',
+    createdAt: '2024-01-16T09:15:00Z'
+  },
+  {
+    _id: '4',
+    personalInfo: {
+      fullName: 'Dhanush M',
+      email: 'dhanush.m@email.com',
+      phone: '+91 9876543210'
+    },
+    courseSelected: 'Computer Science',
+    status: 'approved',
+    additionalInfo: 'Dhanush has impressive coding skills demonstrated through his GitHub portfolio and previous internship experience.',
+    createdAt: '2024-01-13T16:45:00Z'
+  },
+  {
+    _id: '5',
+    personalInfo: {
+      fullName: 'Liya Joseph',
+      email: 'liya.j@email.com',
+      phone: '+91 9876543210'
+    },
+    courseSelected: 'Psychology',
+    status: 'rejected',
+    additionalInfo: 'Liya\'s application was rejected due to incomplete documentation and missing prerequisite courses.',
+    createdAt: '2024-01-12T11:30:00Z'
+  },
+  {
+    _id: '6',
+    personalInfo: {
+      fullName: 'James Dzosua',
+      email: 'james.d@email.com',
+      phone: '+91 9876543210'
+    },
+    courseSelected: 'Engineering',
+    status: 'pending',
+    additionalInfo: 'James has strong technical aptitude and relevant project experience in robotics.',
+    createdAt: '2024-01-17T13:20:00Z'
+  }
+];
 
 const FacultyApplications = () => {
+  const navigate = useNavigate();
   // State management for applications, loading, errors, and modal visibility
   const [applications, setApplications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,10 +134,16 @@ const FacultyApplications = () => {
         const res = await axios.get('http://localhost:5000/api/applications', {
           headers: { Authorization: `Bearer ${token}` }
         });
-        setApplications(res.data);
+        
+        // Combine backend data with mock data
+        const backendData = res.data || [];
+        const combinedData = [...mockApplications, ...backendData];
+        setApplications(combinedData);
       } catch (err) {
         console.error("API Error:", err);
-        setError('Failed to fetch applications. Please try again later.');
+        // Use mock data as fallback when API fails
+        setApplications(mockApplications);
+        setError('Using demo data. API connection failed.');
       } finally {
         setIsLoading(false);
       }
@@ -85,6 +168,15 @@ const FacultyApplications = () => {
     <div className="min-h-screen bg-gray-100/50 font-sans p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <header className="mb-8">
+          <div className="flex items-center gap-4 mb-4">
+            <button
+              onClick={() => navigate('/faculty/dashboard')}
+              className="flex items-center gap-2 px-4 py-2 text-gray-600 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-all duration-200 hover:shadow-md border border-gray-200"
+            >
+              <FaArrowLeft className="text-sm" />
+              <span className="text-sm font-medium">Back to Dashboard</span>
+            </button>
+          </div>
           <h1 className="text-4xl font-bold text-gray-800 tracking-tight">Student Applications</h1>
           <p className="text-gray-500 mt-1">Review and manage all submitted applications.</p>
         </header>

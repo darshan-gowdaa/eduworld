@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Clock, GraduationCap, Users, Star, Filter, ChevronDown, BookOpen, Award, TrendingUp, Heart } from 'lucide-react';
 import CallToAction from '../components/common/CallToAction';
 import HeroSection from '../components/common/HeroSection';
 
 const Courses = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
@@ -93,7 +95,7 @@ const Courses = () => {
       originalPrice: 140000,
       description: 'Study living organisms, genetics, ecology, and their interactions with advanced laboratory experience.',
       features: ['Modern Labs', 'Field Studies', 'Research Opportunities', 'Industry Partnerships'],
-      image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       badge: 'Research Focus',
       level: 'Undergraduate'
     },
@@ -170,6 +172,15 @@ const Courses = () => {
       'Research Focus': 'bg-gradient-to-r from-purple-500 to-indigo-600'
     };
     return colors[badge] || 'bg-gradient-to-r from-gray-500 to-gray-600';
+  };
+
+  const handleCourseClick = (courseId) => {
+    navigate('/register');
+  };
+
+  const handleApplyNowClick = (e, courseId) => {
+    e.stopPropagation(); // Prevent triggering the card click
+    navigate('/register');
   };
 
   return (
@@ -304,7 +315,8 @@ const Courses = () => {
               {filteredCourses.map(course => (
                 <div
                   key={course.id}
-                  className={`group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 ${
+                  onClick={() => handleCourseClick(course.id)}
+                  className={`group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 cursor-pointer ${
                     animatedCards.has(course.id) ? 'animate-fade-in-up' : 'opacity-0'
                   }`}
                 >
@@ -324,7 +336,10 @@ const Courses = () => {
                     
                     {/* Favorite Button */}
                     <button
-                      onClick={() => toggleFavorite(course.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(course.id);
+                      }}
                       className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
                     >
                       <Heart
@@ -400,7 +415,10 @@ const Courses = () => {
                     </div>
                     
                     {/* Action Button */}
-                    <button className="w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <button 
+                      onClick={(e) => handleApplyNowClick(e, course.id)}
+                      className="w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    >
                       Apply Now
                     </button>
                   </div>

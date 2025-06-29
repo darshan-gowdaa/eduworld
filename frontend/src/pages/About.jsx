@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaGraduationCap, FaUsers, FaTrophy, FaGlobe, FaLightbulb, FaHeart, FaChevronDown, FaPlay, FaStar, FaQuoteLeft } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import CallToAction from '../components/common/CallToAction';
 
 const About = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeTimeline, setActiveTimeline] = useState(0);
+  const timelineRefs = useRef([]);
+  const timelineContainerRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -12,12 +15,22 @@ const About = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const stats = [
-    { number: '50,000+', label: 'Students Worldwide', icon: FaUsers },
-    { number: '500+', label: 'Expert Faculty', icon: FaGraduationCap },
-    { number: '95%', label: 'Graduate Success Rate', icon: FaTrophy },
-    { number: '100+', label: 'Countries Reached', icon: FaGlobe }
-  ];
+  // Auto-select timeline card on scroll
+  useEffect(() => {
+    const handleTimelineScroll = () => {
+      if (!timelineRefs.current.length) return;
+      const offsets = timelineRefs.current.map(ref => {
+        if (!ref) return Infinity;
+        const rect = ref.getBoundingClientRect();
+        // Distance from top of viewport (or container)
+        return Math.abs(rect.top - window.innerHeight * 0.25);
+      });
+      const minIndex = offsets.indexOf(Math.min(...offsets));
+      setActiveTimeline(minIndex);
+    };
+    window.addEventListener('scroll', handleTimelineScroll);
+    return () => window.removeEventListener('scroll', handleTimelineScroll);
+  }, []);
 
   const testimonials = [
     {
@@ -39,7 +52,7 @@ const About = () => {
       role: "Engineering Student",
       text: "The hands-on approach and cutting-edge facilities make learning engaging and practical.",
       rating: 5,
-      img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=256&h=256&facepad=2&q=80"
+      img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=facearea&w=256&h=256&facepad=2&q=80"
     }
   ];
 
@@ -77,9 +90,12 @@ const About = () => {
                 <FaPlay className="inline mr-2" />
                 Watch Our Story
               </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105">
+              <Link 
+                to="/courses"
+                className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
+              >
                 Explore Programs
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -87,28 +103,6 @@ const About = () => {
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <FaChevronDown className="text-white text-2xl opacity-70" />
-        </div>
-      </section>
-
-      {/* Interactive Stats Section */}
-      <section className="py-20 bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div 
-                key={index}
-                className="text-center group cursor-pointer transform transition-all duration-300 hover:scale-110"
-              >
-                <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 group-hover:shadow-2xl transition-all duration-300">
-                  <stat.icon className="text-white text-2xl" />
-                </div>
-                <div className="text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  {stat.number}
-                </div>
-                <p className="text-gray-600 font-medium">{stat.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -199,17 +193,16 @@ const About = () => {
             <p className="text-xl text-gray-300">A timeline of growth and excellence</p>
           </div>
 
-          <div className="relative">
+          <div className="relative" ref={timelineContainerRef}>
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 to-purple-400 h-full"></div>
-            
             {timelineEvents.map((event, index) => (
               <div 
                 key={index}
+                ref={el => timelineRefs.current[index] = el}
                 className={`relative mb-16 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8 ml-auto'} w-1/2 group cursor-pointer`}
                 onClick={() => setActiveTimeline(index)}
               >
                 <div className={`absolute top-4 ${index % 2 === 0 ? 'right-0 translate-x-1/2' : 'left-0 -translate-x-1/2'} w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full border-4 border-gray-900 group-hover:scale-150 transition-transform duration-300`}></div>
-                
                 <div className={`bg-white bg-opacity-80 backdrop-blur-lg rounded-2xl p-6 border border-white border-opacity-40 group-hover:bg-opacity-90 transition-all duration-300 ${activeTimeline === index ? 'ring-2 ring-blue-400 scale-105' : ''}`}>
                   <div className="text-3xl font-bold text-blue-700 mb-2">{event.year}</div>
                   <h3 className="text-xl font-semibold mb-2 text-gray-900">{event.title}</h3>
@@ -272,14 +265,14 @@ const About = () => {
             {[
               { name: 'Dr. Ananya Iyer', role: 'President & CEO', desc: 'Leading EduWorld with over 20 years of experience in higher education.', gradient: 'from-blue-500 to-blue-600', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=256&h=256&facepad=2&q=80' },
               { name: 'Prof. Rajesh Nair', role: 'Academic Dean', desc: 'Overseeing academic excellence and curriculum development.', gradient: 'from-green-500 to-green-600', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&w=256&h=256&facepad=2&q=80' },
-              { name: 'Dr. Meera Desai', role: 'Student Affairs Director', desc: 'Ensuring student success and well-being across all programs.', gradient: 'from-purple-500 to-purple-600', img: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=facearea&w=256&h=256&facepad=2&q=80' }
+              { name: 'Dr. Meera Desai', role: 'Student Affairs Director', desc: 'Ensuring student success and well-being across all programs.', gradient: 'from-purple-500 to-purple-600', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=facearea&w=256&h=256&facepad=2&q=80' }
             ].map((leader, index) => (
               <div 
                 key={index}
                 className="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl group"
               >
                 <div className={`bg-gradient-to-r ${leader.gradient} h-48 relative overflow-hidden`}>
-                  <img src={leader.img} alt={leader.name} className="absolute inset-0 w-full h-full object-cover object-top opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                  <img src={leader.img} alt={leader.name} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity duration-300" style={{objectPosition: 'center 35%'}} />
                   <div className="absolute bottom-4 right-4 w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                     <FaUsers className="text-white text-2xl" />
                   </div>

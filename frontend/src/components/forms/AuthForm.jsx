@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, Loader2, AlertCircle, CheckCircle, GraduationCap, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { showToast } from '../ui/Toast';
 
 const defaultFields = {
   login: [
     { name: 'email', label: 'Email address', type: 'email', autoComplete: 'email', required: 'Email is required' },
     { name: 'password', label: 'Password', type: 'password', autoComplete: 'current-password', required: 'Password is required' },
-    { name: 'role', label: 'Role', type: 'role', required: 'Please select a role' },
     { name: 'rememberMe', label: 'Keep me signed in', type: 'checkbox' }
   ],
   register: [
@@ -16,13 +16,13 @@ const defaultFields = {
     { name: 'phone', label: 'Phone Number', type: 'tel', autoComplete: 'tel', required: 'Phone number is required' },
     { name: 'password', label: 'Password', type: 'password', autoComplete: 'new-password', required: 'Password is required', minLength: 8 },
     { name: 'confirmPassword', label: 'Confirm Password', type: 'password', autoComplete: 'new-password', required: 'Please confirm your password', match: 'password' },
-    { name: 'role', label: 'Role', type: 'role', required: 'Please select a role' },
     { name: 'terms', label: 'I agree to the Terms and Conditions', type: 'checkbox', required: 'You must accept the terms and conditions' }
   ]
 };
 
 export default function AuthForm({
   mode = 'login',
+  selectedUserType,
   onSubmit,
   isLoading,
   error,
@@ -43,8 +43,30 @@ export default function AuthForm({
   } = useForm();
   const password = watch('password');
 
+  // Add role to form data when submitting
+  const handleFormSubmit = (data) => {
+    const formData = { ...data, role: selectedUserType };
+    onSubmit(formData);
+  };
+
   return (
-    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-6" onSubmit={handleSubmit(handleFormSubmit)}>
+      {/* User Type Header */}
+      {selectedUserType && (
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
+            {selectedUserType === 'student' ? (
+              <User className="h-5 w-5 text-blue-300" />
+            ) : (
+              <GraduationCap className="h-5 w-5 text-green-300" />
+            )}
+            <span className="text-white font-medium capitalize">
+              {selectedUserType} {mode === 'login' ? 'Login' : 'Registration'}
+            </span>
+          </div>
+        </div>
+      )}
+
       {error && (
         <div className="bg-red-500/20 border border-red-300/30 text-red-100 px-4 py-3 rounded-lg flex items-center backdrop-blur-sm">
           <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0" />
@@ -58,61 +80,6 @@ export default function AuthForm({
         </div>
       )}
       {fields.map(field => {
-        if (field.type === 'role') {
-          // Role selection UI
-          const value = watch('role');
-          return (
-            <div key="role">
-              <label className="block text-sm font-medium text-white/90 mb-3">I am a:</label>
-              <div className="grid grid-cols-2 gap-3">
-                <label className={`relative flex cursor-pointer rounded-lg border p-4 shadow-lg hover:shadow-xl transition duration-200 backdrop-blur-sm ${
-                  value === 'student' ? 'border-blue-400/60 bg-blue-500/30 ring-2 ring-blue-400/50' : 'border-white/30 bg-white/10 hover:border-white/50 hover:bg-white/20'
-                }`}>
-                  <input
-                    type="radio"
-                    value="student"
-                    {...register('role', { required: field.required })}
-                    className="sr-only"
-                  />
-                  <span className="flex flex-1">
-                    <span className="flex flex-col">
-                      <span className="block text-sm font-medium text-white">Student</span>
-                      <span className="mt-1 flex items-center text-sm text-white/70">
-                        <User className="mr-1.5 h-4 w-4" />
-                        Current or prospective student
-                      </span>
-                    </span>
-                  </span>
-                </label>
-                <label className={`relative flex cursor-pointer rounded-lg border p-4 shadow-lg hover:shadow-xl transition duration-200 backdrop-blur-sm ${
-                  value === 'faculty' ? 'border-blue-400/60 bg-blue-500/30 ring-2 ring-blue-400/50' : 'border-white/30 bg-white/10 hover:border-white/50 hover:bg-white/20'
-                }`}>
-                  <input
-                    type="radio"
-                    value="faculty"
-                    {...register('role', { required: field.required })}
-                    className="sr-only"
-                  />
-                  <span className="flex flex-1">
-                    <span className="flex flex-col">
-                      <span className="block text-sm font-medium text-white">Faculty</span>
-                      <span className="mt-1 flex items-center text-sm text-white/70">
-                        <GraduationCap className="mr-1.5 h-4 w-4" />
-                        Staff or faculty member
-                      </span>
-                    </span>
-                  </span>
-                </label>
-              </div>
-              {errors.role && (
-                <p className="mt-2 text-sm text-red-300 flex items-center">
-                  <AlertCircle className="h-4 w-4 mr-1" />
-                  {errors.role.message}
-                </p>
-              )}
-            </div>
-          );
-        }
         if (field.type === 'checkbox') {
           return (
             <div className="flex items-center" key={field.name}>

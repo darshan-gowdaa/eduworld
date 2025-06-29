@@ -1,8 +1,52 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaEnvelope, FaInfoCircle, FaTimes } from 'react-icons/fa';
+import { FaEnvelope, FaInfoCircle, FaTimes, FaArrowLeft, FaExclamationTriangle, FaExclamationCircle, FaInfo } from 'react-icons/fa';
+
+// Priority level component
+const PriorityDisplay = ({ urgency }) => {
+    const baseClasses = "px-3 py-1 text-xs font-semibold rounded-full inline-flex items-center gap-x-1.5";
+    switch (urgency) {
+        case 'urgent':
+            return (
+                <span className={`${baseClasses} bg-red-200 text-red-900 border border-red-300`}>
+                    <FaExclamationTriangle />
+                    Urgent
+                </span>
+            );
+        case 'high':
+            return (
+                <span className={`${baseClasses} bg-red-100 text-red-800`}>
+                    <FaExclamationTriangle />
+                    High
+                </span>
+            );
+        case 'medium':
+            return (
+                <span className={`${baseClasses} bg-yellow-100 text-yellow-800`}>
+                    <FaExclamationCircle />
+                    Medium
+                </span>
+            );
+        case 'low':
+            return (
+                <span className={`${baseClasses} bg-green-100 text-green-800`}>
+                    <FaInfo />
+                    Low
+                </span>
+            );
+        default:
+            return (
+                <span className={`${baseClasses} bg-gray-100 text-gray-800`}>
+                    <FaInfo />
+                    Normal
+                </span>
+            );
+    }
+};
 
 const FacultyEnquiries = () => {
+    const navigate = useNavigate();
     const [enquiries, setEnquiries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -18,10 +62,18 @@ const FacultyEnquiries = () => {
                 const res = await axios.get('http://localhost:5000/api/enquiries', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setEnquiries(res.data);
+                
+                const backendData = res.data || [];
+                // Add urgency field to backend data if missing
+                const processedBackendData = backendData.map(enq => ({
+                    ...enq,
+                    urgency: enq.urgency || 'normal'
+                }));
+                setEnquiries(processedBackendData);
             } catch (err) {
                 console.error("API Error:", err);
-                setError('Failed to fetch enquiries. Please try again later.');
+                setEnquiries([]);
+                setError('Failed to load enquiries. Please try again later.');
             } finally {
                 setLoading(false);
             }
@@ -55,6 +107,15 @@ const FacultyEnquiries = () => {
         <div className="min-h-screen bg-gray-100 font-sans p-4 sm:p-6 lg:p-8">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-8">
+                    <div className="flex items-center gap-4 mb-4">
+                        <button
+                            onClick={() => navigate('/faculty/dashboard')}
+                            className="flex items-center gap-2 px-4 py-2 text-gray-600 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-all duration-200 hover:shadow-md border border-gray-200"
+                        >
+                            <FaArrowLeft className="text-sm" />
+                            <span className="text-sm font-medium">Back to Dashboard</span>
+                        </button>
+                    </div>
                     <h1 className="text-4xl font-bold text-gray-800">Student Enquiries</h1>
                     <p className="text-gray-500 mt-1">View and respond to all student questions and requests.</p>
                 </header>
@@ -67,16 +128,17 @@ const FacultyEnquiries = () => {
                         <table className="min-w-[768px] w-full table-fixed divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase w-1/4">Student</th>
-                                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase w-1/5">Message</th>
-                                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase w-1/4">Received At</th>
+                                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase w-1/5">Student</th>
+                                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase w-1/4">Message</th>
+                                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase w-1/5">Received At</th>
+                                    <th className="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase w-1/6">Priority</th>
                                     <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {enquiries.length === 0 ? (
                                     <tr>
-                                        <td colSpan="4" className="text-center py-12 text-gray-500">
+                                        <td colSpan="5" className="text-center py-12 text-gray-500">
                                             <FaEnvelope className="mx-auto text-4xl text-gray-300" />
                                             <p className="mt-2 text-lg">No enquiries found.</p>
                                         </td>
@@ -94,6 +156,9 @@ const FacultyEnquiries = () => {
                                             </td>
                                             <td className="px-6 py-4 align-top text-sm text-gray-600">
                                                 {formatDateTime(enq.createdAt)}
+                                            </td>
+                                            <td className="px-6 py-4 align-top text-center">
+                                                <PriorityDisplay urgency={enq.urgency || 'normal'} />
                                             </td>
                                             <td className="px-6 py-4 align-top text-right">
                                                 <button

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GraduationCap, Users, Trophy, Globe, ChevronRight, Star, BookOpen, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import CallToAction from '../components/common/CallToAction';
 import WelcomePopup from '../components/common/WelcomePopup';
 
@@ -13,19 +14,22 @@ const Home = () => {
       title: "Transform Your Future with Quality Education",
       subtitle: "Join thousands of students who have already started their journey to success",
       image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80",
-      cta: "Start Your Journey"
+      cta: "Start Your Journey",
+      link: "/register"
     },
     {
       title: "Learn from Industry Experts",
       subtitle: "Our faculty brings real-world experience directly to your classroom",
       image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80",
-      cta: "Meet Our Faculty"
+      cta: "Meet Our Faculty",
+      link: "/about"
     },
     {
       title: "Global Recognition, Local Excellence",
       subtitle: "Degrees recognized worldwide with personalized attention",
       image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80",
-      cta: "Explore Programs"
+      cta: "Explore Programs",
+      link: "/courses"
     }
   ];
 
@@ -45,12 +49,12 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    // Show popup after 3 seconds if not already shown in this session
-    if (!localStorage.getItem('welcomePopupShown')) {
+    // Show popup after 5 seconds if not already shown in this session
+    if (!localStorage.getItem('newsletterPopupShown')) {
       const timer = setTimeout(() => {
         setShowWelcomePopup(true);
-        localStorage.setItem('welcomePopupShown', 'true');
-      }, 3000);
+        localStorage.setItem('newsletterPopupShown', 'true');
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -63,53 +67,72 @@ const Home = () => {
     setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
   };
 
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Welcome Popup (Newsletter) */}
+      {/* Newsletter Popup */}
       {showWelcomePopup && (
         <WelcomePopup onClose={() => setShowWelcomePopup(false)} />
       )}
 
       {/* Enhanced Hero Section with Slider */}
       <section className="relative h-screen overflow-hidden">
-        {heroSlides.map((slide, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${slide.image})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-blue-800/60 to-purple-900/80" />
-            
-            <div className="relative h-full flex items-center justify-center text-center px-4">
-              <div className={`max-w-4xl mx-auto transform transition-all duration-1000 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`}>
-                <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                  {slide.title}
-                </h1>
-                <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-                  {slide.subtitle}
-                </p>
-                <button className="group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center mx-auto">
-                  {slide.cta}
-                  <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
+        <div className="relative h-full w-full">
+          {heroSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                index === currentSlide 
+                  ? 'opacity-100 z-10' 
+                  : 'opacity-0 z-0'
+              }`}
+              style={{
+                transform: index === currentSlide 
+                  ? 'translateX(0)' 
+                  : index < currentSlide 
+                    ? 'translateX(-100%)' 
+                    : 'translateX(100%)',
+                transition: 'all 1s ease-in-out'
+              }}
+            >
+              <div 
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url(${slide.image})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-blue-800/60 to-purple-900/80" />
+              
+              <div className="relative h-full flex items-center justify-center text-center px-4">
+                <div className={`max-w-4xl mx-auto transform transition-all duration-1000 ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`}>
+                  <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                    {slide.title}
+                  </h1>
+                  <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    {slide.subtitle}
+                  </p>
+                  <Link 
+                    to={slide.link}
+                    className="group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center"
+                  >
+                    {slide.cta}
+                    <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
         
         {/* Slider Controls */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
           {heroSlides.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentSlide(index)}
+              onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/80'
               }`}
@@ -121,14 +144,14 @@ const Home = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20"
           aria-label="Previous slide"
         >
           <ChevronRight className="w-6 h-6 rotate-180" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-20"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" />

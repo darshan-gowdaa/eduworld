@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaComments, FaTimes, FaPaperPlane, FaRobot, FaUser, FaTrash, FaWindowMinimize, FaExpand, FaMicrophone, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
+import { FaComments, FaTimes, FaPaperPlane, FaRobot, FaUser, FaTrash, FaWindowMinimize, FaExpand, FaMicrophone, FaThumbsUp, FaThumbsDown, FaHeadset } from 'react-icons/fa';
 import { initialBotMessage, quickReplies, responses } from './chatbotData';
 
 const ChatBot = () => {
@@ -24,17 +24,24 @@ const ChatBot = () => {
     
     // Enhanced keyword matching with synonyms
     const keywordMap = {
-      'course': ['course', 'program', 'degree', 'study', 'curriculum', 'subject'],
-      'apply': ['apply', 'application', 'admission', 'enroll', 'register', 'join'],
-      'fee': ['fee', 'cost', 'price', 'tuition', 'expensive', 'money', 'payment'],
-      'contact': ['contact', 'phone', 'email', 'address', 'reach', 'call'],
-      'scholarship': ['scholarship', 'financial aid', 'grant', 'funding', 'discount'],
-      'campus': ['campus', 'facility', 'building', 'infrastructure', 'library'],
-      'faculty': ['faculty', 'teacher', 'professor', 'staff', 'instructor'],
-      'deadline': ['deadline', 'date', 'when', 'timeline', 'schedule'],
-      'housing': ['housing', 'hostel', 'accommodation', 'room', 'stay'],
-      'internship': ['internship', 'placement', 'job', 'career', 'work'],
-      'job': ['job', 'employment', 'career', 'salary', 'placement', 'recruit']
+      'course': ['course', 'program', 'degree', 'study', 'curriculum', 'subject', 'bachelor', 'master', 'phd'],
+      'apply': ['apply', 'application', 'admission', 'enroll', 'register', 'join', 'admission process'],
+      'fee': ['fee', 'cost', 'price', 'tuition', 'expensive', 'money', 'payment', 'fees', 'payment plan'],
+      'contact': ['contact', 'phone', 'email', 'address', 'reach', 'call', 'whatsapp'],
+      'scholarship': ['scholarship', 'financial aid', 'grant', 'funding', 'discount', 'merit', 'need-based'],
+      'campus': ['campus', 'facility', 'building', 'infrastructure', 'library', 'hostel', 'accommodation'],
+      'faculty': ['faculty', 'teacher', 'professor', 'staff', 'instructor', 'mentor'],
+      'deadline': ['deadline', 'date', 'when', 'timeline', 'schedule', 'last date'],
+      'housing': ['housing', 'hostel', 'accommodation', 'room', 'stay', 'residence'],
+      'internship': ['internship', 'placement', 'job', 'career', 'work', 'training'],
+      'job': ['job', 'employment', 'career', 'salary', 'placement', 'recruit', 'package'],
+      'btech': ['btech', 'b.tech', 'computer science', 'engineering', 'cse', 'computer engineering'],
+      'mba': ['mba', 'business', 'management', 'business administration'],
+      'documents': ['document', 'documents', 'certificate', 'marksheet', 'id proof', 'required'],
+      'payment': ['payment', 'installment', 'loan', 'education loan', 'emi', 'pay'],
+      'virtual': ['virtual', 'tour', 'campus tour', 'visit', 'see campus'],
+      'english': ['english', 'ielts', 'toefl', 'language', 'proficiency', 'pte'],
+      'international': ['international', 'foreign', 'visa', 'passport', 'overseas', 'abroad']
     };
 
     // Find matching keyword
@@ -48,7 +55,7 @@ const ChatBot = () => {
     if (lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hey')) {
       return {
         text: 'Hello! 👋 Great to see you interested in EduWorld! I\'m here to help you with any questions about our programs, admissions, or campus life. What would you like to know?',
-        suggestions: ['Course information', 'Admission process', 'Fee structure', 'Campus tour']
+        suggestions: ['Course information', 'Admission process', 'Fee structure', 'Campus facilities']
       };
     }
 
@@ -63,7 +70,7 @@ const ChatBot = () => {
     // Default response with smart suggestions
     return {
       text: 'I\'d be happy to help you with that! 🤔 I can provide information about courses, admissions, fees, scholarships, campus facilities, and much more. What specific aspect of EduWorld would you like to explore?',
-      suggestions: ['Course details', 'Admission requirements', 'Fee information', 'Campus facilities']
+      suggestions: ['Course information', 'Admission process', 'Fee structure', 'Campus facilities']
     };
   };
 
@@ -148,7 +155,7 @@ const ChatBot = () => {
 
   return (
     <div className={`fixed bottom-6 right-6 z-50 transition-all duration-500 ease-in-out transform ${
-      isMinimized ? 'w-80 h-16' : 'w-96 h-[36rem]'
+      isMinimized ? 'w-80 h-16' : 'w-[28rem] h-[42rem]'
     } flex flex-col`}
     style={{
       background: 'rgba(255, 255, 255, 0.95)',
@@ -173,10 +180,10 @@ const ChatBot = () => {
         
         <div className="flex items-center space-x-4 relative z-10">
           <div className="relative">
-            <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white border-opacity-30">
-              <FaRobot className="h-6 w-6 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center backdrop-blur-sm border border-white border-opacity-30 shadow-lg">
+              {isMinimized ? <FaHeadset className="h-6 w-6 text-white" /> : <FaRobot className="h-6 w-6 text-white" />}
             </div>
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-bounce border-2 border-white"></div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
           </div>
           <div>
             <span className="font-bold text-lg">EduWorld Assistant</span>
@@ -230,7 +237,7 @@ const ChatBot = () => {
                     }`}>
                       {message.type === 'user' ? <FaUser className="h-4 w-4" /> : <FaRobot className="h-4 w-4" />}
                     </div>
-                    <div className={`px-5 py-4 rounded-2xl shadow-lg backdrop-blur-sm transition-all duration-300 transform hover:scale-105 ${
+                    <div className={`px-5 py-4 rounded-2xl shadow-lg backdrop-blur-sm transition-all duration-300 ${
                       message.type === 'user'
                         ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white'
                         : 'bg-white text-gray-800 border border-gray-100'

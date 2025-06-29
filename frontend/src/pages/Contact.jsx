@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import CallToAction from '../components/common/CallToAction';
 import HeroSection from '../components/common/HeroSection';
+import { showToast } from '../components/ui/Toast';
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -87,6 +88,7 @@ const Contact = () => {
     e.preventDefault();
     
     if (!validateForm()) {
+      showToast.error('Please fix the errors in the form before submitting.');
       return;
     }
     
@@ -112,6 +114,8 @@ const Contact = () => {
       if (!response.ok) throw new Error('Failed to send enquiry');
 
       setIsSubmitted(true);
+      showToast.success('Message sent successfully! We\'ll get back to you within 2 hours during business hours.');
+      
       setFormData({
         firstName: '',
         lastName: '',
@@ -129,6 +133,7 @@ const Contact = () => {
       }, 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
+      showToast.error('Failed to send message. Please try again or contact us directly.');
     } finally {
       setIsLoading(false);
     }
@@ -328,7 +333,7 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                    placeholder="Enter your phone number (optional)"
+                    placeholder="Enter your phone number"
                   />
                   {errors.phone && (
                     <p className="mt-2 text-sm text-red-600">{errors.phone}</p>

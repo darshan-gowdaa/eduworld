@@ -1,16 +1,73 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaFileAlt, FaQuestionCircle, FaUserGraduate, FaUsers, FaEye, FaInbox } from 'react-icons/fa';
-
-const stats = [
-  { label: 'Applications', value: 120, icon: <FaFileAlt className="h-8 w-8 text-blue-600" /> },
-  { label: 'Enquiries', value: 35, icon: <FaQuestionCircle className="h-8 w-8 text-yellow-500" /> },
-  { label: 'Students', value: 1500, icon: <FaUserGraduate className="h-8 w-8 text-green-600" /> },
-  { label: 'Faculty', value: 50, icon: <FaUsers className="h-8 w-8 text-purple-600" /> }
-];
+import axios from 'axios';
 
 const FacultyDashboard = () => {
+  const [userName, setUserName] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [stats, setStats] = useState({
+    applications: 0,
+    enquiries: 0,
+    students: 0,
+    faculty: 0
+  });
 
-  const userName = 'Faculty';
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setIsLoading(false);
+          return;
+        }
+
+        // Fetch user data and stats in parallel
+        const [userResponse, statsResponse] = await Promise.all([
+          axios.get('http://localhost:5000/api/auth/me', {
+            headers: { Authorization: `Bearer ${token}` }
+          }),
+          axios.get('http://localhost:5000/api/dashboard/stats', {
+            headers: { Authorization: `Bearer ${token}` }
+          })
+        ]);
+
+        setUserName(userResponse.data.user.name);
+        setStats(statsResponse.data);
+      } catch (err) {
+        console.error('Error fetching dashboard data:', err);
+        // Fallback to localStorage if API fails
+        const fallbackName = localStorage.getItem('userName');
+        if (fallbackName) {
+          setUserName(fallbackName);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  const statsData = [
+    { label: 'Applications', value: stats.applications, icon: <FaFileAlt className="h-8 w-8 text-blue-600" /> },
+    { label: 'Enquiries', value: stats.enquiries, icon: <FaQuestionCircle className="h-8 w-8 text-yellow-500" /> },
+    { label: 'Students', value: stats.students, icon: <FaUserGraduate className="h-8 w-8 text-green-600" /> },
+    { label: 'Faculty', value: stats.faculty, icon: <FaUsers className="h-8 w-8 text-purple-600" /> }
+  ];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <h1 className="text-2xl font-semibold text-gray-600">Loading...</h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -40,7 +97,7 @@ const FacultyDashboard = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-            {stats.map((stat) => (
+            {statsData.map((stat) => (
               <div key={stat.label} className="bg-white rounded-2xl shadow-xl p-8 flex items-center space-x-6 hover:shadow-2xl transition-shadow duration-300 border border-gray-100">
                 {stat.icon}
                 <div>

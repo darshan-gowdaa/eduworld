@@ -7,6 +7,7 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import CallButton from './components/common/CallButton';
 import ChatBot from './components/chat/ChatBot';
+import Toast from './components/ui/Toast';
 
 // Public Pages
 import Home from './pages/Home';
@@ -81,6 +82,7 @@ function App() {
         <Footer />
         <CallButton />
         <ChatBot />
+        <Toast />
       </div>
     );
   }
