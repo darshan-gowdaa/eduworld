@@ -64,14 +64,12 @@ const FacultyEnquiries = () => {
                 });
                 
                 const backendData = res.data || [];
-                // Add urgency field to backend data if missing
                 const processedBackendData = backendData.map(enq => ({
                     ...enq,
                     urgency: enq.urgency || 'normal'
                 }));
                 setEnquiries(processedBackendData);
             } catch (err) {
-                console.error("API Error:", err);
                 setEnquiries([]);
                 setError('Failed to load enquiries. Please try again later.');
             } finally {

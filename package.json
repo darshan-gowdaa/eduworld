@@ -2,17 +2,12 @@
   "name": "eduworld-full-stack",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "cd backend && nodemon server.js",
+    "setup": "concurrently \"npm i\" \"cd frontend && npm install\" \"cd backend && npm install\"",
+    "start": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npx nodemon server.js",
     "dev:frontend": "cd frontend && npm run dev"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "nodemon": "^3.1.0"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.11",
-    "axios": "^1.10.0",
-    "tailwindcss": "^4.1.11"
+    "concurrently": "^8.2.2"
   }
 }

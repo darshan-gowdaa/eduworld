@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-const connectDB = require("./src/config/db");
-const authRoutes = require("./src/routes/authRoutes");
-const applicationsRoutes = require("./src/routes/applicationsRoutes");
-const enquiriesRoutes = require("./src/routes/enquiriesRoutes");
-const dashboardRoutes = require("./src/routes/dashboardRoutes");
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
+const applicationsRoutes = require("./routes/applicationsRoutes");
+const enquiriesRoutes = require("./routes/enquiriesRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 dotenv.config();
 

@@ -140,7 +140,6 @@ const FacultyApplications = () => {
         const combinedData = [...mockApplications, ...backendData];
         setApplications(combinedData);
       } catch (err) {
-        console.error("API Error:", err);
         // Use mock data as fallback when API fails
         setApplications(mockApplications);
         setError('Using demo data. API connection failed.');

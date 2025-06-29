@@ -35,7 +35,6 @@ const FacultyDashboard = () => {
         setUserName(userResponse.data.user.name);
         setStats(statsResponse.data);
       } catch (err) {
-        console.error('Error fetching dashboard data:', err);
         // Fallback to localStorage if API fails
         const fallbackName = localStorage.getItem('userName');
         if (fallbackName) {

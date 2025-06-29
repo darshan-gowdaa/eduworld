@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaUser, FaGraduationCap, FaChevronDown, FaSearch, FaSignOutAlt } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaGraduationCap, FaChevronDown, FaSignOutAlt } from 'react-icons/fa';
 
 const Header = ({ isAuthenticated = true, userRole = 'student', userName = '', dashboardMode = false, onLogout, pathname = '' }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

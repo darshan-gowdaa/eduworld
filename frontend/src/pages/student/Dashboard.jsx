@@ -22,7 +22,6 @@ const StudentDashboard = () => {
 
         setUserName(response.data.user.name);
       } catch (err) {
-        console.error('Error fetching user data:', err);
         // Fallback to localStorage if API fails
         const fallbackName = localStorage.getItem('userName');
         if (fallbackName) {

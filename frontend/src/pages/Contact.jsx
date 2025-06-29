@@ -9,8 +9,6 @@ import {
   MessageCircle, 
   Globe,
   Calendar,
-  Users,
-  Star,
   ChevronDown,
   ExternalLink
 } from 'lucide-react';
@@ -132,7 +130,6 @@ const Contact = () => {
         setIsSubmitted(false);
       }, 5000);
     } catch (error) {
-      console.error('Error submitting form:', error);
       showToast.error('Failed to send message. Please try again or contact us directly.');
     } finally {
       setIsLoading(false);
